@@ -1,0 +1,3 @@
+The Excel workbook, sampling.xlsx, shows the basic setup for creating simulated measurement data (Rows in Sim Data sheet) having a specified mean and standard deviation. The Dists sheet contains seed data from which the simulated measurements are randomly pulled Dists columns are 10,000 normally distributed points having a mean of 0.0 and standard deviation 1.0. The Normal column (A) data were generated in JMP. The Normal2 column B data were generated in Excel using the formula. See the About sheet in the workbook for more details and screen pictures from JMP
+
+J.D. Landgrebe / Data Delve LLC, July 10, 2023
