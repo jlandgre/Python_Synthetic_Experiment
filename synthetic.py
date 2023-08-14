@@ -7,7 +7,7 @@ class SyntheticData:
     JDL 8/7/23
     """
     def __init__(self, len_seed_dist, xbarbar=None, names=None, n_levels=None, var_fracs=None, \
-                 lvl_val_names={}, lvl_val_effects={}, digits=None):
+                 lvl_val_names={}, lvl_val_effects={}, digits=None, meas_nm=None):
             
             #Generate a seed distribution of normally distributed data
             self.dist_seed_normal = pd.Series(np.random.normal(loc=0.0, scale=1.0, size=len_seed_dist))
@@ -20,7 +20,8 @@ class SyntheticData:
             self.names = names  #List of deg-of-freedom names (e.g. batch-to-batch, lab etc.)
             self.n_levels = n_levels    #Dict of N levels/permutations for each deg-of-freedom
             self.var_fracs = var_fracs  #Dict of variabilities for each deg-of-freedom (frac of mean)
-            self.digits = digits        #Number of digits to round to
+            self.digits = digits        #Number of digits for rounding
+            self.meas_nm = meas_nm      #Name of measurement
             self.cum_levels = {}        #Dict of cumulative N levels for each deg-of-freedom
 
             #Variables for naming within-dof levels and specifying level deviations
@@ -111,8 +112,10 @@ class SyntheticData:
         for df in self.lst_dfs:
             self.lst_idx_cols.append('level_' + df.index.name)
             self.lst_devn_cols.append('devns_' + df.index.name)
-            self.lst_lvl_names_cols.append('lvl_names_' + df.index.name)
-            self.lst_lvl_effects_cols.append('lvl_effects_' + df.index.name)
+            self.lst_lvl_names_cols.append(df.index.name)
+            self.lst_lvl_effects_cols.append('effect_' + df.index.name)
+            #self.lst_lvl_names_cols.append('lvl_names_' + df.index.name)
+            #self.lst_lvl_effects_cols.append('lvl_effects_' + df.index.name)
     
     def add_level_name_and_effect_cols(self):
         """
@@ -229,4 +232,8 @@ class SyntheticData:
             self.df_expt['sim_meas'] +=  self.df_expt[col]
         
         self.df_expt['sim_meas'] = self.df_expt['sim_meas'].round(self.digits)
+
+        if not self.meas_nm is None:
+            self.df_expt.rename(columns={'sim_meas': self.meas_nm}, inplace=True)
+
             
