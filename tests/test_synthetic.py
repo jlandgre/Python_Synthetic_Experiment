@@ -97,7 +97,7 @@ def test_add_measurement_col(synth):
     assert 'sim_meas' in synth.df_expt.columns
     sum_expected = synth.xbarbar
     for col in ['devns_batch-to-batch', 'devns_within batch', 'devns_lab', \
-                'lvl_effects_batch-to-batch', 'lvl_effects_within batch']:
+                'effect_batch-to-batch', 'effect_within batch']:
         sum_expected += synth.df_expt.loc[0, col]
 
     assert np.isclose(sum_expected, synth.df_expt.loc[0, 'sim_meas'], atol=0.0001)
@@ -115,28 +115,28 @@ def test_create_experiment_df(synth):
 
     #Check columns are as expected
     cols_expected = ['level_batch-to-batch', 'devns_batch-to-batch', \
-                    'lvl_names_batch-to-batch', 'lvl_effects_batch-to-batch', \
+                    'batch-to-batch', 'effect_batch-to-batch', \
                     'level_within batch', 'devns_within batch', \
-                    'lvl_names_within batch', 'lvl_effects_within batch', \
-                    'level_lab', 'devns_lab', 'lvl_effects_lab']
+                    'within batch', 'effect_within batch', \
+                    'level_lab', 'devns_lab', 'effect_lab']
     assert synth.df_expt.columns.tolist() == cols_expected
 
     #Check values
-    assert synth.df_expt['lvl_effects_lab'].tolist() == 12 * [0.0]
+    assert synth.df_expt['effect_lab'].tolist() == 12 * [0.0]
 
-    vals = synth.df_expt['lvl_effects_batch-to-batch'].values
+    vals = synth.df_expt['effect_batch-to-batch'].values
     np_ary_expected = np.array(6 * [-0.088] + 6 * [0.088])
     result = np.isclose(vals, np_ary_expected, atol=0.0001)
     assert result.all()
 
-    vals = synth.df_expt['lvl_effects_within batch'].values
+    vals = synth.df_expt['effect_within batch'].values
     np_ary_expected = np.array(2 * [-0.044, -0.044, 0.0, 0.0, 0.033, 0.033])
     result = np.isclose(vals, np_ary_expected, atol=0.0001)
     assert result.all()
 
-    assert synth.df_expt['lvl_names_batch-to-batch'].tolist() \
+    assert synth.df_expt['batch-to-batch'].tolist() \
         == 6 * ['Batch A'] + 6 * ['Batch B']
-    assert synth.df_expt['lvl_names_within batch'].tolist() \
+    assert synth.df_expt['within batch'].tolist() \
         == 2 * ['Top', 'Top', 'Middle', 'Middle', 'Bottom', 'Bottom']
 
 def test_add_level_name_and_effect_cols(synth):
@@ -257,8 +257,8 @@ def test_set_col_names(synth):
     synth.set_col_names()
     assert synth.lst_idx_cols == ['level_test']
     assert synth.lst_devn_cols == ['devns_test']
-    assert synth.lst_lvl_names_cols == ['lvl_names_test']
-    assert synth.lst_lvl_effects_cols == ['lvl_effects_test']
+    assert synth.lst_lvl_names_cols == ['test']
+    assert synth.lst_lvl_effects_cols == ['effect_test']
 
 def test_create_dof_df(synth_lst_dfs_0):
     df = synth_lst_dfs_0.lst_dfs[0]
