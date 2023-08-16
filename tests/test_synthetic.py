@@ -15,12 +15,12 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 #Import project-specific class(es)
-from synthetic import SyntheticData
+from synthetic import SyntheticExpt
 
 @pytest.fixture
 def synth():
     """
-    A SyntheticData experiment with normal variability and user-specified level 
+    A SyntheticExpt experiment with normal variability and user-specified level 
     names and effects
     JDL 8/10/23
     """
@@ -35,7 +35,7 @@ def synth():
     lvl_val_effects = {'batch-to-batch':[-0.08, 0.08], 
                        'within batch':[-0.04, 0.0, 0.03]}
 
-    return SyntheticData(10000, xbarbar=1.10, names=names, n_levels=n_levels, \
+    return SyntheticExpt(10000, xbarbar=1.10, names=names, n_levels=n_levels, \
             var_fracs=var_fracs, lvl_val_names=lvl_val_names, \
             lvl_val_effects=lvl_val_effects, digits=4)
 
@@ -68,7 +68,7 @@ def create_df(synth, name):
 
 def synth2():
     """
-    A SyntheticData experiment with normal variability only -- no user-specified  
+    A SyntheticExpt experiment with normal variability only -- no user-specified  
     level names and effects
     JDL 8/10/23
     """
@@ -77,7 +77,7 @@ def synth2():
     n_levels = dict(zip(names, [2, 3, 2]))
     var_fracs = dict(zip(names, [0.01, 0.005, 0.02]))
 
-    return SyntheticData(10000, xbarbar=1.10, names=names, n_levels=n_levels, \
+    return SyntheticExpt(10000, xbarbar=1.10, names=names, n_levels=n_levels, \
             var_fracs=var_fracs, digits=4)
 
 def test_add_measurement_col(synth):
@@ -280,5 +280,5 @@ def test_synth_fixture(synth):
     Check fixture instantiation
     JDL 8/8/23
     """
-    assert isinstance(synth, SyntheticData)
+    assert isinstance(synth, SyntheticExpt)
     assert synth.names == ['batch-to-batch', 'within batch', 'lab']

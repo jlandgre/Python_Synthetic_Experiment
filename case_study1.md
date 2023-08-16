@@ -18,14 +18,14 @@ These screen pictures from **Case_Studies.ipynb** show input variables based on 
   <img src=images/case_study1_2.png "Level-specific Inputs" width=600></br>
 </p>
 
- To produce simulated experiment results, instance a **SyntheticData** Class as shown and run its **create_experiment_procedure()** method. The resulting **df_expt** dataframe contains the details, including simulated lab measurement results in the right-most column. The printout shows a high-level view by batch name, within-batch, lab sample number and simulated measurement value.
+ To produce simulated experiment results, instance a **SyntheticExpt** Class as shown and run its **create_experiment_procedure()** method. The resulting **df_expt** dataframe contains the details, including simulated lab measurement results in the right-most column. The printout shows a high-level view by batch name, within-batch, lab sample number and simulated measurement value.
 
 <p align="center">
   Class Instancing and Data Output</br>
   <img src=images/case_study1_3.png "Example Experiment" width=400></br>
 </p>
 
- Without filtering the columns (not shown; see *.ipynb), additional diagnostics show how the simulated lab measurements are generated
+ Without filtering the columns (not shown; see *.ipynb), additional diagnostic columns show how the simulated lab measurements are generated
 * Columns with "devns_ prefix" are the random (unexplained)variability for that dof. These are in the measurement's cps units
 * Columns with "effect_" prefix are the user-specified effects --also in cps
 

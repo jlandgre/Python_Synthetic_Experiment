@@ -1,18 +1,18 @@
 **Background**</br>
 Synthetic data experiments are a way to explore an experimental space prior to running sometimes expensive and time-consuming physical experiments. As an example use case, simulation can provide an idea of whether a qualification has a chance of passing versus specification criteria. It is also a way to explore whether a particular sampling plan can resolve effects that may be present in a designed experiment.
 
-This repository shares a Python Monte Carlo-based simulator for running synthetic lab or industrial experiments. The simulator is comprised of a Python Class, **SyntheticData** in the **synthetic.py** file. The class is validated by Pytest testing in tests/test_synthetic.py. 
+This repository shares a Python Monte Carlo-based simulator for running synthetic lab or industrial experiments. The simulator is comprised of a Python Class, **SyntheticExpt** in the **synthetic.py** file. The class is validated by Pytest testing in tests/test_synthetic.py. 
 
 In the Class, the experiment is described by a list of the “degrees of freedom“ describing the sampling dimensions for the experimental domain. This high level of abstraction allows the simulator to be used broadly in applications ranging from small lab experiments to multi-lot manufacturing qualifications spanning months of production and for contexts of liquid chemical processes, part molding, extruded piece production or web substrate production. The simulation outputs a matrix of simulated measurement results for the specified degrees of freedom and their levels.
 
 The simulator's Monte Carlo engine introduces random variability for each degree of freedom. This is based on user input of a standard deviation for unknown cause/random variation due to that degree of freedom. Even prior to running a trial or qualification, it is common for the process experts to have experience-based estimates of such variability ("lot-to-lot raw material variability is typically about 5% of the mean for products like these"). Lab or measurement variability can often be pre-quantified by running a lab co-op study on small quantities of the product.
 
-For simulating designed experiments, **SyntheticData** can take inputs for user-specified effects within a degree of freedom's levels such as for different batches of product whose results vary due to varying their formulation or process conditions. 
+For simulating designed experiments, **SyntheticExpt** can take inputs for user-specified effects within a degree of freedom's levels such as for different batches of product whose results vary due to varying their formulation or process conditions. 
 
 Monte Carlo simulation is an alternative to and not a replacement for rigorous statistical power calculations. However, working with simulated data is often a good way to internalize what to expect from a manufacturing process or to practice techniques for analyzing real-world experiments and product qualifications. It also can be helpful as a comparison to real data for understanding the value of potential control strategy improvements.
 
-**SyntheticData Python Class Inputs and Usage**</br>
-The simulator takes several required and optional inputs when a **SyntheticData** Class is instanced. Each class instance is for a specific measurement, so multiple instances should be used to simulate the collection of measurements in a typical product or raw material specification.
+**SyntheticExpt Python Class Inputs and Usage**</br>
+The simulator takes several required and optional inputs when a **SyntheticExpt** Class is instanced. Each class instance is for a specific measurement, so multiple instances should be used to simulate the collection of measurements in a typical product or raw material specification.
 * **xbarbar** [Required] Measurement grand mean (in measurement's units). This is used as a reference point for generating results.  
 * **sig_digits** [Required] Number of significant digits for rounding calculated measurements.
 * **nms_dof** [Required] List of names of the degrees of freedom. See example below. Each degree of freedom is a categorical variables describing a sampling location or time. Here are some example lists for lab and industrial contexts:
@@ -36,7 +36,7 @@ The simulator takes several required and optional inputs when a **SyntheticData*
   <img src=images/case_study1_2.png "Level-specific Inputs" width=600></br>
 </p>
 
-To run a simulated experiment, instance the SyntheticData Class and run its **create_experiment_procedure()** method. The output **SyntheticData.df_expt** dataframe contains the details, including simulated lab measurement results. See the separate file, case_study1.md, for an example.
+To run a simulated experiment, instance the SyntheticExpt Class and run its **create_experiment_procedure()** method. The output **SyntheticExpt.df_expt** dataframe contains the details, including simulated lab measurement results. See the separate file, case_study1.md, for an example.
 
 <p align="center">
   Class Instancing and Data Output</br>

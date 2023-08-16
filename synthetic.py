@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-class SyntheticData:
+class SyntheticExpt:
     """
     This class generates normally-distributed synthetic data for a simulated measurement
     JDL 8/7/23
@@ -114,8 +114,6 @@ class SyntheticData:
             self.lst_devn_cols.append('devns_' + df.index.name)
             self.lst_lvl_names_cols.append(df.index.name)
             self.lst_lvl_effects_cols.append('effect_' + df.index.name)
-            #self.lst_lvl_names_cols.append('lvl_names_' + df.index.name)
-            #self.lst_lvl_effects_cols.append('lvl_effects_' + df.index.name)
     
     def add_level_name_and_effect_cols(self):
         """
